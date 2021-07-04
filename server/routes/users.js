@@ -6,9 +6,9 @@ const User=require('../models/Users')
 const jwt=require('jsonwebtoken')
 
 router.post('/login',async (req,res)=>{
-    const {email,password}=req.body;
+    const {phone,password}=req.body;
     try{
-        const existingUser=await User.findOne({email:email})
+        const existingUser=await User.findOne({phone:phone})
         if(!existingUser){
             return res.status(404).json({message:"User does not exist"})
         }
@@ -16,7 +16,7 @@ router.post('/login',async (req,res)=>{
         if(!isPasswordCorrect){
             return res.status(400).json({message:"Password Incorrect"})
         }
-        const token=jwt.sign({email:existingUser.email,id:existingUser._id},'test',{
+        const token=jwt.sign({phone:existingUser.phone,id:existingUser._id},'test',{
             expiresIn:'1h'
         })
         return res.status(200).json({result:existingUser,token:token,msg:'User logged In'})
@@ -27,15 +27,15 @@ router.post('/login',async (req,res)=>{
 })
 
 router.post('/register',async(req,res)=>{
-    const {name,email,password}=req.body;
+    const {name,phone,password}=req.body;
     try{
-        const existingUser=await User.findOne({email:email})
+        const existingUser=await User.findOne({phone:phone})
         if(existingUser){
             return res.status(404).json({message:"User already exists"})    
         }
         const hashedPassword=await bcrypt.hash(password,12)
-        const newUser=await User.create({name,email,password:hashedPassword})
-        const token=jwt.sign({email:newUser.email,id:newUser._id},'test',{expiresIn:'1h'})
+        const newUser=await User.create({name,phone,password:hashedPassword})
+        const token=jwt.sign({phone:newUser.phone,id:newUser._id},'test',{expiresIn:'1h'})
         return res.status(200).json({result:newUser,token:token,msg:'User Signed Up'})
     }
     catch(err){
@@ -43,21 +43,6 @@ router.post('/register',async(req,res)=>{
     }
 })
 
-router.post('/google/login',async (req,res)=>{
-    const {name,email,password,token}=req.body;
-    try{
-        const existingUser=await User.findOne({email})
-        if(existingUser){
-            jwt.sign({email:existingUser.email,id:existingUser._id},'test',{expiresIn:'1h'})
-            return res.status(200).json({result:existingUser,token,msg:"User logged in"})      
-        }
-        const newUser=await User.create({name,email,password})
-        jwt.sign({email:newUser.email,id:newUser._id},'test',{expiresIn:'1h'})
-        return res.status(200).json({result:newUser,token,msg:"User logged in"})
-    }
-    catch(err){
-        console.log(err)
-    }
-})
+
 
 module.exports=router

@@ -6,8 +6,8 @@ const userSchema=mongoose.Schema({
         type:String,
         required:true 
     },
-    email:{
-        type:String,
+    phone:{
+        type:Number,
         required:true
     },
     password:{
