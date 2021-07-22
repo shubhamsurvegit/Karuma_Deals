@@ -35,7 +35,7 @@ router.post('/register',async(req,res)=>{
         }
         const hashedPassword=await bcrypt.hash(password,12)
         const newUser=await User.create({name,phone,password:hashedPassword})
-        const token=jwt.sign({phone:newUser.phone,id:newUser._id},'test',{expiresIn:'1h'})
+        const token=jwt.sign({phone:newUser.phone,id:newUser._id},'test',{expiresIn:'24h'})
         return res.status(200).json({result:newUser,token:token,msg:'User Signed Up'})
     }
     catch(err){

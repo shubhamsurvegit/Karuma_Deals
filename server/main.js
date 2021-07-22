@@ -39,4 +39,6 @@ app.use('/',require('./routes/Buy'))
 
 app.use('/',require('./routes/Sms'))
 
+app.use('/',require('./routes/Mydeals'))
+
 app.listen(5000,()=>console.log('Server Running...'))

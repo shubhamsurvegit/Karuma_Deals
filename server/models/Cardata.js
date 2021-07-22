@@ -9,13 +9,16 @@ const car=mongoose.Schema({
         brand:String,
         model: String,
         year: String,
-        ownership:String,
+        fuel_type:String,
         city: String,
-        price: Number,
-        selling_price: Number,
+        kms_driven:Number,
+        selling_price:String,
+        status:{
+            type:Boolean,
+            default:false
+        },
         images:[
         ],
-        contact:Number
     }]   
 })
 
