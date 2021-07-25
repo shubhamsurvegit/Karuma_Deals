@@ -7,6 +7,9 @@ const auth=require('../middleware/auth')
 router.get('/mydeals',auth,async (req,res)=>{
     try{
         const cardata=await Cardata.findOne({key:req.UserId})
+        if(!cardata){
+            return res.status(200).json({result:{key:req.UserId,cars_for_sale:[]}})
+        }
         return res.status(200).json({result:cardata})
     }
     catch(err){

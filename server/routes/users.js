@@ -14,7 +14,7 @@ router.post('/login',async (req,res)=>{
         }
         const isPasswordCorrect=await bcrypt.compare(password,existingUser.password)
         if(!isPasswordCorrect){
-            return res.status(400).json({message:"Password Incorrect"})
+            return res.status(422).json({message:"Password Incorrect"})
         }
         const token=jwt.sign({phone:existingUser.phone,id:existingUser._id},'test',{
             expiresIn:'1h'
