@@ -20,11 +20,11 @@ const auth=(req,res,next)=>{
             next();
         }
         else{
-            console.log("KINDLY LOGIN")
+            return res.status(404).json({message:"Token Not found"})
         }
     }
     catch(err){
-        console.log(err)
+        return res.status(401).json({message:"Session Expired! Kindly login"})
     }
 }
 

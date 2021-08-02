@@ -11,12 +11,11 @@ router.get('/getcars',async (req,res)=>{
             {
                 $lookup:{
                     from:'users',
-                    localField:'key.str',
-                    foreignField:'_id.str',
+                    localField:'key',
+                    foreignField:'_id',
                     as:'seller_data'
                 }
             },
-            {$unwind : "$seller_data"}
         ])
         res.status(200).json({cars})
     }
